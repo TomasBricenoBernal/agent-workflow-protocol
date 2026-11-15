@@ -17,10 +17,11 @@ This role is optional and advisory. Core implementation ownership remains in `fr
 
 ## Read First
 
+Skip every item the delegating brief already covers.
+
 1. `planning/tasks/active_task.md`
-2. `.agents/context/TASK.md`
-3. Related task files
-4. Only the UI or workflow files needed for the review
+2. Related task files
+3. Only the UI or workflow files needed for the review
 
 ## Use When
 

@@ -2,7 +2,7 @@
 
 Use this repository workflow for normal delivery:
 
-1. Activate `Context` first to confirm the smallest valid reading path.
+1. Start from the core reading order. Activate `Context` only when the reading path is unclear, the context has grown large, or work is drifting into unrelated files.
 2. Open or point to a task when the work is non-trivial or crosses files.
 3. Assign one lead agent for the current stage and keep other agents inactive unless triggered.
 4. Add specialist agents only when their trigger conditions are reached.
@@ -12,8 +12,13 @@ Use this repository workflow for normal delivery:
 8. During QA, explicitly decide whether a dedicated follow-up review task is needed and record the rationale.
 9. If a follow-up review is needed, create a new review task and assign the required review agents and depth.
 10. Run Security or Database review directly only when QA determines a separate review task is unnecessary and the protocol still requires a local pass.
-11. Run `python planning/scripts/validate_task_docs.py <task-path>` before closing a non-trivial task.
+11. Run `python planning/scripts/check.py` before closing a non-trivial task; read only what it reports as failed.
 12. Move to `Done` only after tracking, QA, validation, and any scheduled follow-up reviews are complete.
+
+Test-first rule: for `Standard` and `Deep` tasks in a project with a test runner,
+write the failing test from the acceptance criteria before the implementation.
+Let machines check what machines can check (`check.py`); spend review effort on
+whether the task solved what was asked, edge cases, and risk.
 
 ---
 

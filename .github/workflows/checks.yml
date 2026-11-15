@@ -1,0 +1,18 @@
+name: checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Install the project's own toolchain here (npm ci, pip install, ...) so
+      # the commands in .agents/config/checks.json can run.
+      - name: Run project checks
+        run: python planning/scripts/check.py

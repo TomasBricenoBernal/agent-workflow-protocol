@@ -5,8 +5,9 @@ Default: Low.
 ### Low
 
 - Max 3 context files.
-- Max 2 source files.
-- No broad search.
+- Max 2 source files read in full; beyond that, read only targeted slices.
+- Before changing a function, type, route, or schema, search for its usages and read the matching slices. A search is cheap; breaking a caller you never saw is not.
+- No open-ended exploration.
 
 ### Medium
 
@@ -31,31 +32,7 @@ Use these rules to reduce token usage without losing correctness:
 - Summarize decisions once in canonical files instead of duplicating them across notes.
 - Escalate from `Low` to `Medium` or `High` only when the task risk truly requires it.
 - If broader context is used, record why in the task notes or plan.
-
-## Token Efficiency Model
-
-Apply improvements in this order:
-
-### Low-Effort Savings
-
-- Assign one lead agent per stage instead of activating multiple peers by default.
-- Read diffs, task files, and targeted sections before reading full files.
-- Reuse canonical context files instead of repeating project state in task notes.
-- Keep agent outputs short and structured.
-
-### Medium-Effort Savings
-
-- Use structured handoffs between agents and stages.
+- Keep agent outputs short and structured; prefer templates and checklists over free-form text.
 - Break multi-surface work into smaller tasks so each agent reads less context.
-- Run QA from changed files, acceptance criteria, and nearby regression risk first.
-- Trigger Security only when exposure or trust-boundary conditions change.
-
-### Structural High-Impact Savings
-
-- Maintain feature-level integration review separate from task-level review.
-- Keep a stable trigger catalog so specialist agents are not invoked defensively.
-- Treat context maintenance as an explicit operational step, not ad hoc narration.
-- Favor reusable templates and checklists over free-form review text.
 
 ---
-

@@ -4,7 +4,7 @@
 - `title`: `Refine agent limits, token strategy, and DevOps role`
 - `status`: `Done`
 - `related_feature`: `0001-workflow-protocol-foundation`
-- `related_feature_path`: `features/0001-workflow-protocol-foundation/`
+- `related_feature_path`: `planning/features/0001-workflow-protocol-foundation/`
 - `owner`: `Codex`
 - `created_on`: `2026-05-24`
 - `next_step`: `Choose the next active protocol or repository task before starting new non-trivial work.`

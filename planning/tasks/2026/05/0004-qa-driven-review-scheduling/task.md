@@ -4,7 +4,7 @@
 - `title`: `Make QA schedule follow-up review tasks when needed`
 - `status`: `Done`
 - `related_feature`: `0001-workflow-protocol-foundation`
-- `related_feature_path`: `features/0001-workflow-protocol-foundation/`
+- `related_feature_path`: `planning/features/0001-workflow-protocol-foundation/`
 - `owner`: `Codex`
 - `created_on`: `2026-05-24`
 - `next_step`: `Create or point to the next active task before starting new non-trivial work.`

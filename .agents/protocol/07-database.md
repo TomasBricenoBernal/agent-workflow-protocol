@@ -12,8 +12,7 @@ When a task changes persistence, the Database Agent must coordinate with:
 A database change is not complete until:
 
 - `.agents/context/database_map.md` is updated.
-- Related files are listed in `modified_files.md`.
-- Data integrity risks are listed in `qa.md` or `changes_current.md`.
+- Data integrity risks are listed in the task's `## QA` section or in `changes_current.md`.
 - Migration or test instructions are provided.
 
 ---

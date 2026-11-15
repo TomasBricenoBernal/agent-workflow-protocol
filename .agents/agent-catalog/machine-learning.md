@@ -13,11 +13,12 @@ Own target definition, baseline selection, model evaluation, leakage prevention,
 
 ## Read First
 
+Skip every item the delegating brief already covers.
+
 1. `planning/tasks/active_task.md`
-2. `.agents/context/TASK.md`
-3. `.agents/context/current_state.md`
-4. Related task files
-5. Only the data, modeling, and evaluation files needed for the task
+2. `.agents/context/current_state.md`
+3. Related task files
+4. Only the data, modeling, and evaluation files needed for the task
 
 ## Use When
 

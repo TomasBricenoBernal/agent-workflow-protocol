@@ -13,6 +13,7 @@ Use `.agents/context/` for short operational context.
 - `decision_log.md`: short reusable decisions.
 - `glossary.md`: operational or domain terms.
 - `token_strategy.md`: context and token usage guidance.
+- `lessons/`: past mistakes and the rule that prevents each, one file per area.
 
 ## Do Not Use `planning/docs/` For
 

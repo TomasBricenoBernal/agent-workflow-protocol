@@ -9,4 +9,4 @@ List only files changed by this task.
 - `tasks/_templates/*.md`: created reusable task templates.
 - `features/_templates/*.md`: created reusable feature templates.
 - `docs/*.md`: initialized reusable repository docs.
-- `features/0001-workflow-protocol-foundation/*.md`: created feature-level reference files.
+- `planning/features/0001-workflow-protocol-foundation/*.md`: created feature-level reference files.

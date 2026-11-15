@@ -2,14 +2,14 @@
 
 ## Covered Tasks
 
-- `tasks/2026/05/0001-bootstrap-workflow-protocol/`
-- `tasks/2026/05/0002-agent-limits-and-devops-role/`
-- `tasks/2026/05/0003-token-efficiency-model/`
-- `tasks/2026/05/0004-qa-driven-review-scheduling/`
-- `tasks/2026/05/0005-review-trigger-hardening/`
-- `tasks/2026/05/0006-balanced-qa-gating/`
-- `tasks/2026/05/0007-task-doc-validation-automation/`
-- `tasks/2026/05/0008-add-ml-and-ai-agents/`
+- `planning/tasks/2026/05/0001-bootstrap-workflow-protocol/`
+- `planning/tasks/2026/05/0002-agent-limits-and-devops-role/`
+- `planning/tasks/2026/05/0003-token-efficiency-model/`
+- `planning/tasks/2026/05/0004-qa-driven-review-scheduling/`
+- `planning/tasks/2026/05/0005-review-trigger-hardening/`
+- `planning/tasks/2026/05/0006-balanced-qa-gating/`
+- `planning/tasks/2026/05/0007-task-doc-validation-automation/`
+- `planning/tasks/2026/05/0008-add-ml-and-ai-agents/`
 
 ## Cross-Task Checks
 
