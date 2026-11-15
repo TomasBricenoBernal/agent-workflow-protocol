@@ -1,7 +1,7 @@
 ## Project Setup (Mandatory First Task)
 
 Read this module when `.agents/context/project_profile.md` does not exist. Setup
-runs once per project and decides which subagents the project actually needs.
+runs once per project and designs the team of subagents the project needs.
 
 ### 1. Ask the user
 
@@ -28,52 +28,58 @@ Create `.agents/context/project_profile.md`:
 - `tools`: comma-separated stack
 - `constraints`: or `None`
 
-## Installed Agents
+## Team
 
-- `agent-name`: why this project needs it
-
-## Not Installed
-
-- `agent-name`: why it is not needed yet
+- `agent-name` (area): what it owns in this project
 ```
 
-### 3. Install the agents
+### 3. Design the team
+
+The agents in `.agents/agent-catalog/` are generic defaults, not finished
+agents. Treat them as starting drafts: the project's team is designed from its
+objective and tools, and every agent is rewritten for this project.
 
 Core agents are always installed in `.claude/agents/`: `qa`, `security`,
-`context-manager`. Optional agents live in `.agents/agent-catalog/` and are
-inert until copied.
+`context-manager`. Tailor them too.
 
-| Catalog agent | Install when the project has |
+Drafts available in the catalog:
+
+| Draft | Covers |
 |---|---|
-| `architect` | Several modules or services, or a non-trivial design to plan |
+| `architect` | Module boundaries, integration plans, refactors |
 | `backend` | Server-side code: APIs, services, business rules |
-| `frontend-ui` | A user interface |
-| `database` | A database, migrations, or persisted data |
-| `data-analytics` | Excel/CSV processing, transformations, or metrics |
-| `machine-learning` | Model training or evaluation |
-| `ai-integrations` | AI APIs, prompts, or automations |
-| `devops` | Deployment, CI/CD, or runtime environments to manage |
-| `innovation` | A user who wants improvement proposals |
-| `ux-operational` | Operator-facing workflows worth critiquing |
+| `frontend-ui` | User interface |
+| `database` | Schema, migrations, persisted data |
+| `data-analytics` | Excel/CSV processing, transformations, metrics |
+| `machine-learning` | Model training and evaluation |
+| `ai-integrations` | AI APIs, prompts, automations |
+| `devops` | Deployment, CI/CD, runtime environments |
+| `innovation` | Improvement proposals |
+| `ux-operational` | Critique of operator-facing workflows |
 
 Steps:
 
-1. Propose the list of agents to install with a one-line reason each, and wait
-   for the user's confirmation.
-2. Copy each confirmed agent from `.agents/agent-catalog/` to `.claude/agents/`.
-   Leave the catalog intact so agents can be added later.
-3. Tailor each installed agent to the stated tools: name the real stack in its
-   `description` and rules (for example the framework, ORM, or test runner).
-   Keep the file's structure and limits.
-4. If the project needs a role the catalog lacks, create a new subagent file
-   following the same structure, and add it to the role map in
-   `05-agent-roles.md`.
-5. In `04-work-modes-activation.md` and `05-agent-roles.md`, delete the table
-   rows for roles that were not installed, so the always-on protocol only
-   describes this project. Re-add a row when its agent is installed later.
-6. Run `python3 .agents/planning/scripts/build_org.py` so the organization chart
-   shows the installed agents. A new role must also be added to an area in
-   `.agents/config/org.json`.
+1. From the objective and the tools, list the roles this project needs. Start
+   from the work, not from the catalog: a role may match a draft, combine two,
+   split one (for example `mobile` and `web` instead of `frontend-ui`), or be
+   something the catalog does not have (for example `payments` or `game-design`).
+   Keep the team as small as the project allows.
+2. Group the roles into areas and decide who reviews whom. Show the user the
+   proposed team - role, one-line purpose, model, area, reviewer - and wait for
+   confirmation or changes.
+3. Create each confirmed agent in `.claude/agents/`: copy the matching draft, or
+   `.agents/agent-catalog/_template.md` when there is none. Then rewrite it for
+   this project: the real stack, folders, and conventions in its `description`,
+   responsibilities, and limits. Do not leave generic text. Pick the model by
+   the judgment the role needs (opus for design and risk, sonnet for
+   implementation, haiku for light routing). Leave the catalog untouched.
+4. Rewrite `.agents/config/org.json` with this project's areas, agents, and
+   review lines. Every installed agent must be in exactly one area.
+5. Update the tables in `04-work-modes-activation.md` and `05-agent-roles.md` so
+   they list exactly this project's roles: remove rows for roles the project
+   does not have and add rows for the new ones.
+6. Run `python3 .agents/planning/scripts/build_org.py`. Once the profile exists,
+   the organization chart in `README.md` shows only this project's team.
 7. Tell the user to restart Claude Code so the new subagents register.
 
 ### 4. Configure verification
@@ -106,8 +112,9 @@ with the user:
 
 ### Later changes
 
-When a task needs a role that is not installed, say so, install it from the
-catalog with the user's confirmation, and update `project_profile.md`. When the
-objective or the tools change, update the profile and review the installed set.
+When a task needs a role the team lacks, say so, create it the same way (draft
+or `_template.md`, rewritten for the project) with the user's confirmation, add
+it to `org.json`, regenerate the chart, and update `project_profile.md`. When
+the objective or the tools change, update the profile and review the team.
 
 ---
