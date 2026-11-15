@@ -22,5 +22,12 @@ if ! git diff --quiet -- AGENTS.md; then
   echo "pre-commit: regenerated and staged AGENTS.md"
 fi
 
+# Keep the organization chart in README.md in sync with the agent files.
+"$PY" .agents/planning/scripts/build_org.py >/dev/null
+if ! git diff --quiet -- README.md; then
+  git add README.md
+  echo "pre-commit: regenerated and staged the organization chart in README.md"
+fi
+
 # Run the project checks (lint, tests, task docs). Prints only failures.
 "$PY" .agents/planning/scripts/check.py

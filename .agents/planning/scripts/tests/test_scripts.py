@@ -4,15 +4,19 @@
 """
 
 import json
+import shutil
 import sys
 import tempfile
 import unittest
+from datetime import date
 from pathlib import Path
 
 SCRIPTS = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(SCRIPTS))
 
 import build_agents  # noqa: E402
+import build_org  # noqa: E402
+import new_task  # noqa: E402
 import validate_task_docs as v  # noqa: E402
 
 CONFIG = json.loads((v.ROOT / ".agents" / "config" / "review_rules.json").read_text(encoding="utf-8"))
@@ -151,6 +155,128 @@ class BuildAgentsTests(unittest.TestCase):
         for module in sorted(build_agents.PROTOCOL_DIR.glob("*.md")):
             if module not in always_on:
                 self.assertIn(module.name, foundations, f"{module.name} is not listed as on-demand")
+
+
+class BuildOrgTests(unittest.TestCase):
+    ORG = {
+        "lead": "Lead",
+        "areas": [
+            {"name": "Build", "agents": ["backend", "payments"]},
+            {"name": "Data", "agents": ["data-analytics"]},
+            {"name": "Review", "agents": ["qa"]},
+        ],
+        "reviews": [
+            {"from": "qa", "to_area": "Build", "label": "reviews"},
+            {"from": "qa", "to_area": "Data", "label": "reviews"},
+            {"from": "qa", "to": "data-analytics", "label": "checks data"},
+        ],
+    }
+
+    def agent_dirs(self, tmp: str) -> tuple:
+        installed_dir, catalog_dir = Path(tmp, "installed"), Path(tmp, "catalog")
+        installed_dir.mkdir()
+        catalog_dir.mkdir()
+        for name, model in (("qa", "sonnet"), ("payments", "opus")):
+            (installed_dir / f"{name}.md").write_text(f"---\nname: {name}\nmodel: {model}\n---\n")
+        for name in ("backend", "data-analytics"):
+            (catalog_dir / f"{name}.md").write_text(f"---\nname: {name}\nmodel: sonnet\n---\n")
+        (catalog_dir / "_template.md").write_text("---\nname: role-name\nmodel: sonnet\n---\n")
+        return build_org.agent_files(installed_dir), build_org.agent_files(catalog_dir)
+
+    def test_template_mode_shows_catalog_drafts_dashed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            installed, catalog = self.agent_dirs(tmp)
+            chart = build_org.render(self.ORG, installed, catalog, configured=False)
+        self.assertIn('backend["backend<br/>sonnet"]', chart)
+        self.assertIn('payments["payments<br/>opus"]', chart)
+        self.assertIn("class backend,data_analytics catalog", chart)
+
+    def test_project_mode_shows_only_the_projects_team(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            installed, catalog = self.agent_dirs(tmp)
+            chart = build_org.render(self.ORG, installed, catalog, configured=True)
+        self.assertIn('payments["payments<br/>opus"]', chart)
+        self.assertIn('qa["qa<br/>sonnet"]', chart)
+        self.assertNotIn("backend", chart)
+        self.assertNotIn("data_analytics", chart)
+        self.assertNotIn("area_Data", chart)  # empty area and its review lines are dropped
+        self.assertNotIn("catalog", chart)
+        self.assertIn('qa -. "reviews" .-> area_Build', chart)
+
+    def test_template_file_is_not_an_agent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, catalog = self.agent_dirs(tmp)
+        self.assertNotIn("_template", catalog)
+
+    def test_org_naming_an_agent_without_a_file_is_an_error(self):
+        org = {"lead": "Lead", "areas": [{"name": "Build", "agents": ["ghost"]}], "reviews": []}
+        with self.assertRaises(SystemExit):
+            build_org.render(org, {}, {}, configured=False)
+
+    def test_installed_agent_missing_from_org_is_reported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            installed, _ = self.agent_dirs(tmp)
+        org = {"lead": "Lead", "areas": [{"name": "Review", "agents": ["qa"]}], "reviews": []}
+        self.assertEqual(build_org.unplaced_agents(org, installed), ["payments"])
+
+    def test_repo_org_places_every_installed_agent_once(self):
+        org = build_org.load_org()
+        listed = [name for area in org["areas"] for name in area["agents"]]
+        self.assertEqual(len(listed), len(set(listed)), "an agent is listed in two areas")
+        self.assertEqual(build_org.unplaced_agents(org, build_org.agent_files(build_org.INSTALLED_DIR)), [])
+        self.assertLessEqual(set(listed), build_org.agent_names(), "org.json names an agent with no file")
+
+    def test_readme_chart_is_current(self):
+        readme = build_org.README.read_text(encoding="utf-8")
+        self.assertIn(
+            build_org.block(build_org.load_org()),
+            readme,
+            "The organization chart is stale: run python3 .agents/planning/scripts/build_org.py",
+        )
+
+    def test_agent_template_has_the_required_frontmatter(self):
+        text = (build_org.CATALOG_DIR / "_template.md").read_text(encoding="utf-8")
+        for field in ("name:", "description:", "tools:", "model:"):
+            self.assertIn(field, text)
+
+
+class NewTaskTests(unittest.TestCase):
+    def make_root(self, tmp: str) -> Path:
+        root = Path(tmp).resolve()
+        templates = root / ".agents" / "planning" / "tasks" / "_templates"
+        templates.mkdir(parents=True)
+        shutil.copy(v.ROOT / ".agents" / "planning" / "tasks" / "_templates" / "task.md", templates)
+        return root
+
+    def test_first_task_gets_id_0001(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.make_root(tmp)
+            folder = new_task.create_task(root, "Add login form!", today=date(2027, 3, 9))
+            self.assertEqual(folder.relative_to(root).as_posix(), ".agents/planning/tasks/2027/03/0001-add-login-form")
+
+    def test_next_id_follows_the_highest_existing_one(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.make_root(tmp)
+            (root / ".agents" / "planning" / "tasks" / "2026" / "05" / "0007-old").mkdir(parents=True)
+            folder = new_task.create_task(root, "next", today=date(2027, 3, 9))
+            self.assertEqual(folder.name, "0008-next")
+
+    def test_task_file_and_active_pointer_are_filled(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.make_root(tmp)
+            folder = new_task.create_task(root, "Add login form", today=date(2027, 3, 9))
+            task = v.parse_markdown_file(folder / "task.md")["root"]
+            self.assertEqual(task["task_id"], "0001-add-login-form")
+            self.assertEqual(task["status"], "In Progress")
+            self.assertEqual(task["created_on"], "2027-03-09")
+            active = v.parse_markdown_file(root / ".agents" / "planning" / "tasks" / "active_task.md")["root"]
+            self.assertEqual(active["path"], ".agents/planning/tasks/2027/03/0001-add-login-form/")
+
+    def test_title_without_letters_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.make_root(tmp)
+            with self.assertRaises(SystemExit):
+                new_task.create_task(root, "!!!")
 
 
 if __name__ == "__main__":

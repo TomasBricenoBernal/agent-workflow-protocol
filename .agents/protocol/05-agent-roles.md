@@ -9,9 +9,9 @@ isolated context, so its work does not consume the main thread's tokens.
 Do not duplicate role specifications here. Update the subagent file instead.
 
 `qa`, `security`, and `context-manager` are core and always installed. The other
-roles ship in `.agents/agent-catalog/` and are installed into `.claude/agents/`
-by project setup (`11-project-setup.md`) according to the project's objective
-and tools.
+roles ship in `.agents/agent-catalog/` as generic drafts. Project setup
+(`11-project-setup.md`) designs the project's team from its objective and
+tools, rewriting drafts or creating new roles, and updates this table.
 
 Role label (used in the activation table and in QA `review_agents`) → subagent:
 
@@ -32,6 +32,10 @@ Role label (used in the activation table and in QA `review_agents`) → subagent
 | (optional UI critic) | `ux-operational` | haiku | on setup |
 
 ---
+
+Areas and review lines are defined in `.agents/config/org.json`; the chart in
+`README.md` is generated from it with `python3 .agents/planning/scripts/build_org.py`.
+Areas only group roles: the lead agent delegates directly to each specialist.
 
 Review governance (QA scheduling, non-negotiable triggers, proportionality, the
 `other` rationale) lives in `.agents/protocol/13-review-governance.md`, read on
