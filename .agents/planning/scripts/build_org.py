@@ -48,7 +48,7 @@ def agent_info(name: str) -> tuple:
 
 
 def render(org: dict) -> str:
-    lines = ["```mermaid", "flowchart TD", '    user(["User"]) --> lead["' + org["lead"] + '"]']
+    lines = ["```mermaid", "flowchart LR", '    user(["User"]) --> lead["' + org["lead"] + '"]']
     catalog = []
     for area in org["areas"]:
         area_id = "area_" + node_id(area["name"])
