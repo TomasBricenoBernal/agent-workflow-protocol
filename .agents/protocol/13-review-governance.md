@@ -41,7 +41,7 @@ Proportionality rule:
 
 Verification rule:
 
-- Run `python .agents/planning/scripts/check.py` once and read only its failures. Do not re-derive by reading what it already checked (build, lint, types, tests).
+- Run `python3 .agents/planning/scripts/check.py` once and read only its failures. Do not re-derive by reading what it already checked (build, lint, types, tests).
 - Check each acceptance criterion through its `verify:` step. A criterion without one goes back to `In Progress`.
 - Spend the review on what tools cannot judge: whether the task solved what was asked, edge cases, invalid inputs, and regression risk.
 

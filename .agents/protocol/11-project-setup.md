@@ -93,7 +93,7 @@ with the user:
 - Keep the template's `script-tests` entry while `.agents/planning/scripts/` is in use.
 - If the project has no test runner yet, propose one; the test-first rule needs it.
 - Add the toolchain install step to `.github/workflows/checks.yml`.
-- Run `python .agents/planning/scripts/check.py` and make it pass before closing setup.
+- Run `python3 .agents/planning/scripts/check.py` and make it pass before closing setup.
 
 ### 5. Close setup
 

@@ -29,7 +29,7 @@ Skip every item the delegating brief already covers.
 
 - Review before a task moves from `In Review` to `Done`.
 - Choose review depth: `Light`, `Standard`, or `Deep`.
-- Run `python .agents/planning/scripts/check.py` once and read only its failures; do not re-check by reading what it already covers.
+- Run `python3 .agents/planning/scripts/check.py` once and read only its failures; do not re-check by reading what it already covers.
 - Verify each acceptance criterion through its `verify:` step; send criteria without one back.
 - Check invalid inputs, edge cases, regressions, and missing tests.
 - Record a lesson in `.agents/planning/docs/lessons/{area}.md` when a finding could repeat.

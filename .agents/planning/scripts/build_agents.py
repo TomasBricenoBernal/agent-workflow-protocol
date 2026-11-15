@@ -11,7 +11,7 @@ says when to read each one.
 
 Run after editing any protocol module:
 
-    python .agents/planning/scripts/build_agents.py
+    python3 .agents/planning/scripts/build_agents.py
 """
 
 from __future__ import annotations
@@ -29,7 +29,7 @@ HEADER = """# AGENTS.md
 
 <!-- GENERATED FILE - do not edit by hand.
      Source of truth: .agents/protocol/*.md
-     Regenerate:      python .agents/planning/scripts/build_agents.py
+     Regenerate:      python3 .agents/planning/scripts/build_agents.py
      CLAUDE.md stays modular via @import (Claude Code expands it). This file is
      the flattened protocol for tools that read AGENTS.md as plain text
      (Codex, opencode). -->

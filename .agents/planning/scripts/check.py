@@ -3,7 +3,7 @@
 
 One entry point for agents, the pre-commit hook, and CI:
 
-    python .agents/planning/scripts/check.py
+    python3 .agents/planning/scripts/check.py
 
 It runs, in order:
 
@@ -196,7 +196,7 @@ def main() -> int:
         print(format_failures(failures))
         print(f"\n{len(failures)} of {count} checks failed")
         return 1
-    print(f"OK: {count} checks passed")
+    print(f"OK: {count} check{'' if count == 1 else 's'} passed")
     return 0
 
 
