@@ -1,6 +1,6 @@
 """Tests for the planning scripts. Run with:
 
-    python -m unittest discover -s .agents/planning/scripts/tests
+    python3 -m unittest discover -s .agents/planning/scripts/tests
 """
 
 import json
@@ -142,7 +142,7 @@ class BuildAgentsTests(unittest.TestCase):
         expected = build_agents.render(build_agents.always_on_modules())
         actual = build_agents.OUTPUT.read_text(encoding="utf-8")
         self.assertEqual(
-            actual, expected, "AGENTS.md is stale: run python .agents/planning/scripts/build_agents.py"
+            actual, expected, "AGENTS.md is stale: run python3 .agents/planning/scripts/build_agents.py"
         )
 
     def test_on_demand_modules_are_indexed(self):

@@ -81,7 +81,7 @@ A non-trivial task is not complete until:
 - `handoff.md` is written if the task is paused, handed off, or blocked.
 - The related feature's `changes_current.md` is updated if behavior changed.
 - `.agents/context/current_state.md` is updated only if what is true about the project changed. It is a snapshot: replace the affected lines, do not append history.
-- `python .agents/planning/scripts/check.py` passes. It runs the project's own checks (`.agents/config/checks.json`) and validates the docs of every `Done` task, and prints only failures.
+- `python3 .agents/planning/scripts/check.py` passes. It runs the project's own checks (`.agents/config/checks.json`) and validates the docs of every `Done` task, and prints only failures.
 - `.agents/planning/tasks/active_task.md` shows the final status or the next task.
 
 ---

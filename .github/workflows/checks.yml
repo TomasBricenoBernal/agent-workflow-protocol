@@ -15,4 +15,4 @@ jobs:
       # Install the project's own toolchain here (npm ci, pip install, ...) so
       # the commands in .agents/config/checks.json can run.
       - name: Run project checks
-        run: python .agents/planning/scripts/check.py
+        run: python3 .agents/planning/scripts/check.py

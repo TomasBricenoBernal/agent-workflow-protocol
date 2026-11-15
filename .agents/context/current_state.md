@@ -4,7 +4,7 @@ Snapshot of what is true now. Replace lines instead of appending history, and
 keep it under 20 bullets. History lives in git and in the task files.
 
 - Purpose: reusable template that gives coding agents a low-token working protocol.
-- Layout: the root holds only `AGENTS.md`, `README.md`, `.gitignore`, and the tool folders; hooks, planning data, scripts, and the template guide live under `.agents/`.
+- Layout: the root holds only `AGENTS.md`, `README.md`, `.gitignore`, and the tool folders; hooks, planning data, and scripts live under `.agents/`. The root `README.md` is the template guide.
 - Protocol: modules in `.agents/protocol/`. `.claude/CLAUDE.md` imports the always-on ones (00–06, 09, 10); 07, 08, 11, 12, 13 are read on demand.
 - `AGENTS.md` is generated from the modules `CLAUDE.md` imports (on-demand ones are left out) by `.agents/planning/scripts/build_agents.py`; the pre-commit hook in `.agents/hooks/` regenerates it. Never edit it by hand.
 - Agents: `qa`, `security`, `context-manager` are installed in `.claude/agents/`; 10 optional agents wait in `.agents/agent-catalog/`.
