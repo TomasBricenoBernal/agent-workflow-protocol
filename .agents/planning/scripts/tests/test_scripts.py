@@ -4,15 +4,19 @@
 """
 
 import json
+import shutil
 import sys
 import tempfile
 import unittest
+from datetime import date
 from pathlib import Path
 
 SCRIPTS = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(SCRIPTS))
 
 import build_agents  # noqa: E402
+import build_org  # noqa: E402
+import new_task  # noqa: E402
 import validate_task_docs as v  # noqa: E402
 
 CONFIG = json.loads((v.ROOT / ".agents" / "config" / "review_rules.json").read_text(encoding="utf-8"))
@@ -151,6 +155,72 @@ class BuildAgentsTests(unittest.TestCase):
         for module in sorted(build_agents.PROTOCOL_DIR.glob("*.md")):
             if module not in always_on:
                 self.assertIn(module.name, foundations, f"{module.name} is not listed as on-demand")
+
+
+class BuildOrgTests(unittest.TestCase):
+    def test_every_agent_is_in_exactly_one_area(self):
+        org = build_org.load_org()
+        listed = [name for area in org["areas"] for name in area["agents"]]
+        self.assertEqual(len(listed), len(set(listed)), "an agent is listed in two areas")
+        self.assertEqual(set(listed), build_org.agent_names(), "org.json and the agent files disagree")
+
+    def test_readme_chart_matches_org_and_agent_files(self):
+        readme = build_org.README.read_text(encoding="utf-8")
+        self.assertIn(
+            build_org.block(build_org.load_org()),
+            readme,
+            "The organization chart is stale: run python3 .agents/planning/scripts/build_org.py",
+        )
+
+    def test_review_lines_point_at_known_targets(self):
+        org = build_org.load_org()
+        areas = {area["name"] for area in org["areas"]}
+        names = build_org.agent_names()
+        for review in org["reviews"]:
+            self.assertIn(review["from"], names)
+            if "to" in review:
+                self.assertIn(review["to"], names)
+            else:
+                self.assertIn(review["to_area"], areas)
+
+
+class NewTaskTests(unittest.TestCase):
+    def make_root(self, tmp: str) -> Path:
+        root = Path(tmp).resolve()
+        templates = root / ".agents" / "planning" / "tasks" / "_templates"
+        templates.mkdir(parents=True)
+        shutil.copy(v.ROOT / ".agents" / "planning" / "tasks" / "_templates" / "task.md", templates)
+        return root
+
+    def test_first_task_gets_id_0001(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.make_root(tmp)
+            folder = new_task.create_task(root, "Add login form!", today=date(2027, 3, 9))
+            self.assertEqual(folder.relative_to(root).as_posix(), ".agents/planning/tasks/2027/03/0001-add-login-form")
+
+    def test_next_id_follows_the_highest_existing_one(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.make_root(tmp)
+            (root / ".agents" / "planning" / "tasks" / "2026" / "05" / "0007-old").mkdir(parents=True)
+            folder = new_task.create_task(root, "next", today=date(2027, 3, 9))
+            self.assertEqual(folder.name, "0008-next")
+
+    def test_task_file_and_active_pointer_are_filled(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.make_root(tmp)
+            folder = new_task.create_task(root, "Add login form", today=date(2027, 3, 9))
+            task = v.parse_markdown_file(folder / "task.md")["root"]
+            self.assertEqual(task["task_id"], "0001-add-login-form")
+            self.assertEqual(task["status"], "In Progress")
+            self.assertEqual(task["created_on"], "2027-03-09")
+            active = v.parse_markdown_file(root / ".agents" / "planning" / "tasks" / "active_task.md")["root"]
+            self.assertEqual(active["path"], ".agents/planning/tasks/2027/03/0001-add-login-form/")
+
+    def test_title_without_letters_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.make_root(tmp)
+            with self.assertRaises(SystemExit):
+                new_task.create_task(root, "!!!")
 
 
 if __name__ == "__main__":

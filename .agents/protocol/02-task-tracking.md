@@ -17,7 +17,7 @@ Do not create a task folder for trivial one-line or single-file changes unless e
 
 Task files:
 
-- `task.md` — required. One file holds the goal, scope, acceptance criteria, and the QA record. Copy `.agents/planning/tasks/_templates/task.md`.
+- `task.md` — required. One file holds the goal, scope, acceptance criteria, and the QA record. Create it with `python3 .agents/planning/scripts/new_task.py "<title>"`, which picks the next id, copies the template, and updates `active_task.md`.
 - `plan.md`, `handoff.md`, `notes.md` — optional; create only when needed.
 
 Every acceptance criterion ends with `verify:` and how it is checked: a command,

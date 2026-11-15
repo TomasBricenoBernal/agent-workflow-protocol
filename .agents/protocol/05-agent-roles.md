@@ -33,6 +33,10 @@ Role label (used in the activation table and in QA `review_agents`) → subagent
 
 ---
 
+Areas and review lines are defined in `.agents/config/org.json`; the chart in
+`README.md` is generated from it with `python3 .agents/planning/scripts/build_org.py`.
+Areas only group roles: the lead agent delegates directly to each specialist.
+
 Review governance (QA scheduling, non-negotiable triggers, proportionality, the
 `other` rationale) lives in `.agents/protocol/13-review-governance.md`, read on
 demand when performing QA.

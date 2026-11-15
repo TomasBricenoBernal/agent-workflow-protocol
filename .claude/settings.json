@@ -18,7 +18,10 @@
       "Bash(python3 .agents/planning/scripts/validate_task_docs.py:*)",
       "Bash(python .agents/planning/scripts/validate_task_docs.py:*)",
       "Bash(python3 .agents/planning/scripts/check.py:*)",
-      "Bash(python .agents/planning/scripts/check.py:*)"
+      "Bash(python .agents/planning/scripts/check.py:*)",
+      "Bash(python3 .agents/planning/scripts/new_task.py:*)",
+      "Bash(python3 .agents/planning/scripts/build_org.py:*)",
+      "Bash(python3 .agents/planning/scripts/build_agents.py:*)"
     ]
   },
   "hooks": {

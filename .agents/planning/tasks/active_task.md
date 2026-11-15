@@ -1,8 +1,8 @@
 # Active Task
 
-- `task_id`: `0014-readme-at-root`
+- `task_id`: `0015-org-chart-and-skills`
 - `status`: `Done`
-- `path`: `.agents/planning/tasks/2026/11/0014-readme-at-root/`
+- `path`: `.agents/planning/tasks/2026/11/0015-org-chart-and-skills/`
 - `related_feature`: `.agents/planning/features/0001-workflow-protocol-foundation/`
-- `current_goal`: `Put the guide back at the root as README.md and correct what was inaccurate.`
+- `current_goal`: `Add a generated organization chart, task-creation script, and three skills.`
 - `next_step`: `Create or point to the next active task before starting new non-trivial work.`

@@ -1,0 +1,16 @@
+{
+  "lead": "Lead agent (main session)",
+  "areas": [
+    {"name": "Coordination", "agents": ["context-manager"]},
+    {"name": "Design", "agents": ["architect", "ux-operational", "innovation"]},
+    {"name": "Build", "agents": ["backend", "frontend-ui", "database", "devops"]},
+    {"name": "Data and AI", "agents": ["data-analytics", "machine-learning", "ai-integrations"]},
+    {"name": "Review", "agents": ["qa", "security"]}
+  ],
+  "reviews": [
+    {"from": "qa", "to_area": "Build", "label": "reviews"},
+    {"from": "qa", "to_area": "Data and AI", "label": "reviews"},
+    {"from": "qa", "to": "security", "label": "follow-up on security triggers"},
+    {"from": "qa", "to": "database", "label": "follow-up on schema triggers"}
+  ]
+}

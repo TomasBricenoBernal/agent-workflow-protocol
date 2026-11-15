@@ -10,6 +10,8 @@ keep it under 20 bullets. History lives in git and in the task files.
 - Agents: `qa`, `security`, `context-manager` are installed in `.claude/agents/`; 10 optional agents wait in `.agents/agent-catalog/`.
 - `qa` runs on sonnet; the lead agent overrides it to opus for `Deep` reviews. `context-manager` is activated only when the reading path is unclear or context grows.
 - Delegation briefs carry goal, acceptance criteria, and relevant state, so subagents skip their `Read First` list.
+- Organization chart: areas and review lines live in `.agents/config/org.json`; `build_org.py` writes the Mermaid chart into `README.md` (the pre-commit hook regenerates it). Areas only group roles.
+- Skills in `.claude/skills/`: `setup-project`, `new-task` (backed by `new_task.py`), `qa-review`.
 - Setup gate: until `.agents/context/project_profile.md` exists, the first task is to ask the user for objective and tools and install the needed agents. This template repo has no profile on purpose.
 - Tasks: one `task.md` per non-trivial task holds goal, scope, acceptance criteria, and the QA record. Changed files come from git, not from a hand-kept list.
 - Legacy tasks 0001–0009 keep separate `qa.md` and `modified_files.md`; the validator accepts both formats.

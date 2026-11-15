@@ -141,7 +141,7 @@ Do not create a task folder for trivial one-line or single-file changes unless e
 
 Task files:
 
-- `task.md` — required. One file holds the goal, scope, acceptance criteria, and the QA record. Copy `.agents/planning/tasks/_templates/task.md`.
+- `task.md` — required. One file holds the goal, scope, acceptance criteria, and the QA record. Create it with `python3 .agents/planning/scripts/new_task.py "<title>"`, which picks the next id, copies the template, and updates `active_task.md`.
 - `plan.md`, `handoff.md`, `notes.md` — optional; create only when needed.
 
 Every acceptance criterion ends with `verify:` and how it is checked: a command,
@@ -383,6 +383,10 @@ Role label (used in the activation table and in QA `review_agents`) → subagent
 | (optional UI critic) | `ux-operational` | haiku | on setup |
 
 ---
+
+Areas and review lines are defined in `.agents/config/org.json`; the chart in
+`README.md` is generated from it with `python3 .agents/planning/scripts/build_org.py`.
+Areas only group roles: the lead agent delegates directly to each specialist.
 
 Review governance (QA scheduling, non-negotiable triggers, proportionality, the
 `other` rationale) lives in `.agents/protocol/13-review-governance.md`, read on

@@ -71,7 +71,10 @@ Steps:
 5. In `04-work-modes-activation.md` and `05-agent-roles.md`, delete the table
    rows for roles that were not installed, so the always-on protocol only
    describes this project. Re-add a row when its agent is installed later.
-6. Tell the user to restart Claude Code so the new subagents register.
+6. Run `python3 .agents/planning/scripts/build_org.py` so the organization chart
+   shows the installed agents. A new role must also be added to an area in
+   `.agents/config/org.json`.
+7. Tell the user to restart Claude Code so the new subagents register.
 
 ### 4. Configure verification
 

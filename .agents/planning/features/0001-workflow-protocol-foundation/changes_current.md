@@ -35,3 +35,4 @@ Summarize only the current feature-relevant behavior changes.
 - Acceptance criteria now require a `verify:` step, enforced by the validator.
 - Added test-first, search-before-editing, and lessons rules, plus unit tests for the scripts.
 - Moved planning data, scripts, git hooks, and the guide under `.agents/`, and `CLAUDE.md` into `.claude/`, leaving a minimal root.
+- Added an organization chart generated from `org.json` and the agent files, a `new_task.py` script, and the skills `setup-project`, `new-task`, `qa-review`.
