@@ -15,7 +15,7 @@ Own review of secrets, trust boundaries, permissions, uploads, sensitive data, a
 
 Skip every item the delegating brief already covers.
 
-1. `planning/tasks/active_task.md`
+1. `.agents/planning/tasks/active_task.md`
 2. Related task files
 3. Only the changed files and interfaces that affect exposure
 

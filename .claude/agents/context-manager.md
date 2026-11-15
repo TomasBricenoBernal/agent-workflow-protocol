@@ -19,7 +19,7 @@ This file corresponds to the compact `Context` role in `AGENTS.md`.
 
 Skip every item the delegating brief already covers.
 
-1. `planning/tasks/active_task.md`
+1. `.agents/planning/tasks/active_task.md`
 2. `.agents/context/current_state.md`
 3. `.agents/context/context_manifest.md`
 4. `.agents/context/source_map.md`

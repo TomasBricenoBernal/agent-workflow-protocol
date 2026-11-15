@@ -90,16 +90,16 @@ with the user:
 ```
 
 - Set `require_project_profile` to `true`.
-- Keep the template's `script-tests` entry while `planning/scripts/` is in use.
+- Keep the template's `script-tests` entry while `.agents/planning/scripts/` is in use.
 - If the project has no test runner yet, propose one; the test-first rule needs it.
 - Add the toolchain install step to `.github/workflows/checks.yml`.
-- Run `python planning/scripts/check.py` and make it pass before closing setup.
+- Run `python .agents/planning/scripts/check.py` and make it pass before closing setup.
 
 ### 5. Close setup
 
 - Track setup as a normal task (`{id}-project-setup`) with QA depth `Light`.
 - Update `.agents/context/current_state.md` with the objective and stack.
-- Point `planning/tasks/active_task.md` at the next task.
+- Point `.agents/planning/tasks/active_task.md` at the next task.
 
 ### Later changes
 

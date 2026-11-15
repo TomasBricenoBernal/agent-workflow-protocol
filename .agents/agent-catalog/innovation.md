@@ -15,7 +15,7 @@ Propose practical improvements, simplifications, automation, and operational eff
 
 Skip every item the delegating brief already covers.
 
-1. `planning/tasks/active_task.md`
+1. `.agents/planning/tasks/active_task.md`
 2. `.agents/context/current_state.md`
 3. Related task or feature files only if needed
 

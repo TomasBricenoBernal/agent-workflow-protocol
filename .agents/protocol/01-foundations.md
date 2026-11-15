@@ -35,7 +35,7 @@ Use the smallest context required for the task.
 
 Read these first:
 
-1. `planning/tasks/active_task.md`
+1. `.agents/planning/tasks/active_task.md`
 2. `.agents/context/current_state.md`
 3. The active task's `task.md`
 
@@ -61,10 +61,10 @@ Not loaded by default (neither imported by `CLAUDE.md` nor inlined in
 task matches:
 
 - `.agents/protocol/07-database.md` — any task that changes schema, migrations, persistence, relationships, or important queries.
-- `.agents/protocol/08-feature-tracking.md` — when creating or updating a feature folder under `planning/features/`.
+- `.agents/protocol/08-feature-tracking.md` — when creating or updating a feature folder under `.agents/planning/features/`.
 - `.agents/protocol/12-data-ml-rules.md` — Excel/CSV processing, data transformations, or machine-learning work.
 - `.agents/protocol/13-review-governance.md` — when performing QA or moving a task to `In Review`.
-- `planning/docs/lessons/{area}.md` — before working in an area, if the file exists (past mistakes and the rule that prevents each).
+- `.agents/planning/docs/lessons/{area}.md` — before working in an area, if the file exists (past mistakes and the rule that prevents each).
 - `.agents/protocol/11-project-setup.md` — when `.agents/context/project_profile.md` does not exist, or when installing or removing subagents.
 
 ---

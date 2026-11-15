@@ -15,7 +15,7 @@ Own verification quality, acceptance criteria, edge cases, regression checks, an
 
 Skip every item the delegating brief already covers.
 
-1. `planning/tasks/active_task.md`
+1. `.agents/planning/tasks/active_task.md`
 2. The task's `task.md`
 3. `.agents/protocol/13-review-governance.md`
 4. Changed source files only (`git diff --name-only`)
@@ -29,10 +29,10 @@ Skip every item the delegating brief already covers.
 
 - Review before a task moves from `In Review` to `Done`.
 - Choose review depth: `Light`, `Standard`, or `Deep`.
-- Run `python planning/scripts/check.py` once and read only its failures; do not re-check by reading what it already covers.
+- Run `python .agents/planning/scripts/check.py` once and read only its failures; do not re-check by reading what it already covers.
 - Verify each acceptance criterion through its `verify:` step; send criteria without one back.
 - Check invalid inputs, edge cases, regressions, and missing tests.
-- Record a lesson in `planning/docs/lessons/{area}.md` when a finding could repeat.
+- Record a lesson in `.agents/planning/docs/lessons/{area}.md` when a finding could repeat.
 - Start with changed files, acceptance criteria, and nearby regression risk before widening scope.
 - Decide whether an additional review task must be created.
 - Assign the review agents and depth for that follow-up review when needed.
