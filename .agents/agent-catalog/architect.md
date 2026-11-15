@@ -13,11 +13,12 @@ Own architecture, module boundaries, integration plans, and long-term maintainab
 
 ## Read First
 
+Skip every item the delegating brief already covers.
+
 1. `planning/tasks/active_task.md`
-2. `.agents/context/TASK.md`
-3. `.agents/context/current_state.md`
-4. Related task files
-5. Related feature files if applicable
+2. `.agents/context/current_state.md`
+3. Related task files
+4. Related feature files if applicable
 
 ## Use When
 

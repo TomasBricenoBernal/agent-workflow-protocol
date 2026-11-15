@@ -1,0 +1,9 @@
+{
+  "require_project_profile": false,
+  "commands": [
+    {
+      "name": "script-tests",
+      "run": "{python} -m unittest discover -s planning/scripts/tests -q"
+    }
+  ]
+}

@@ -3,7 +3,8 @@
   "review_depths": ["Light", "Standard", "Deep"],
   "task_statuses": ["Planned", "In Progress", "Blocked", "In Review", "Done"],
   "qa_statuses": ["Pending", "Planned", "Done", "Blocked"],
-  "required_task_files": ["task.md", "modified_files.md", "qa.md"],
+  "required_task_files": ["task.md"],
+  "criteria_verify_marker": "verify:",
   "required_qa_fields": [
     "task_id",
     "review_depth",

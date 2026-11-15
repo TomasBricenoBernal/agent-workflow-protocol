@@ -11,7 +11,7 @@ Establish a shared workflow protocol for Codex and Claude with task tracking, re
 
 ## Planned Tasks
 
-- `tasks/2026/05/0001-bootstrap-workflow-protocol/`
+- `planning/tasks/2026/05/0001-bootstrap-workflow-protocol/`
 
 ## Risks
 

@@ -9,7 +9,6 @@ Create only the files needed.
 Recommended files:
 
 - `plan.md`
-- `modified_files.md`
 - `changes_current.md`
 - `qa.md`
 

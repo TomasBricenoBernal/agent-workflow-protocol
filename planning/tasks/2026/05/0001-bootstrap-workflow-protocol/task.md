@@ -4,7 +4,7 @@
 - `title`: `Bootstrap workflow protocol`
 - `status`: `Done`
 - `related_feature`: `0001-workflow-protocol-foundation`
-- `related_feature_path`: `features/0001-workflow-protocol-foundation/`
+- `related_feature_path`: `planning/features/0001-workflow-protocol-foundation/`
 - `owner`: `Codex`
 - `created_on`: `2026-05-05`
 - `next_step`: `Create the next active task before new non-trivial work starts.`

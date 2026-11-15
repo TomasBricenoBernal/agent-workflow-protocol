@@ -43,6 +43,11 @@ Role labels in this table are Claude Code subagents in `.claude/agents/`. Some
 labels differ from the file name: Data → `data-analytics`, Frontend →
 `frontend-ui`, Context → `context-manager`. Delegate to them by subagent name.
 
+Only agents installed in `.claude/agents/` can be delegated to. If the table
+calls for a role that is not installed, install it from `.agents/agent-catalog/`
+(see `11-project-setup.md`) or have the lead agent cover that step and record
+the gap in the task notes.
+
 Do not activate all agents by default.
 
 Default activation rule:
@@ -84,9 +89,11 @@ Keep in the main thread when:
 - The change touches 1-2 known files (delegation overhead is not worth it).
 - The step needs the full conversation context to be correct.
 
-When delegating, give the subagent: the goal, the exact files or search scope,
+When delegating, give the subagent: the goal, the acceptance criteria, the
+relevant project state in two or three lines, the exact files or search scope,
 and the expected return shape (a short summary or a diff, never raw file dumps).
-The reply must be the conclusion, not the contents read. One delegation depth
+A brief that carries this replaces the subagent's own reading of the task and
+context files. The reply must be the conclusion, not the contents read. One delegation depth
 per step; no recursive delegation by default.
 
 ---

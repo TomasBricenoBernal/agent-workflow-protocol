@@ -15,8 +15,22 @@
       "Bash(find:*)",
       "Bash(diff:*)",
       "Bash(tree:*)",
-      "Bash(python3 scripts/validate_task_docs.py:*)",
-      "Bash(python scripts/validate_task_docs.py:*)"
+      "Bash(python3 planning/scripts/validate_task_docs.py:*)",
+      "Bash(python planning/scripts/validate_task_docs.py:*)",
+      "Bash(python3 planning/scripts/check.py:*)",
+      "Bash(python planning/scripts/check.py:*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/planning/scripts/check.py\" --hook"
+          }
+        ]
+      }
     ]
   }
 }

@@ -18,7 +18,7 @@ KEY_VALUE_RE = re.compile(r"^\s*-\s+`([^`]+)`:\s*(.*)\s*$")
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Validate task.md and qa.md consistency for task folders."
+        description="Validate task.md (and legacy qa.md) for task folders."
     )
     parser.add_argument(
         "task_paths",
@@ -78,6 +78,27 @@ def parse_markdown_file(path: Path) -> Dict[str, Dict[str, str]]:
     return sections
 
 
+def display_path(path: Path) -> Path:
+    """Path relative to the repo when possible, unchanged otherwise."""
+    try:
+        return path.relative_to(ROOT)
+    except ValueError:
+        return path
+
+
+def section_bullets(path: Path, heading: str) -> List[str]:
+    """Top-level bullet texts inside `## heading` (sub-headings included)."""
+    bullets: List[str] = []
+    inside = False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## "):
+            inside = line[3:].strip() == heading
+            continue
+        if inside and line.startswith("- "):
+            bullets.append(line[2:].strip())
+    return bullets
+
+
 def normalize_value(value: str) -> str:
     value = value.strip()
     if value.startswith("`") and value.endswith("`") and len(value) >= 2:
@@ -87,7 +108,7 @@ def normalize_value(value: str) -> str:
 
 def validate_task_folder(task_path: Path, config: dict) -> List[str]:
     errors: List[str] = []
-    rel_task_path = task_path.relative_to(ROOT) if task_path.is_absolute() else task_path
+    rel_task_path = display_path(task_path)
 
     for required_file in config["required_task_files"]:
         if not (task_path / required_file).exists():
@@ -98,20 +119,31 @@ def validate_task_folder(task_path: Path, config: dict) -> List[str]:
     except FileNotFoundError:
         return errors
 
-    try:
-        qa_doc = parse_markdown_file(task_path / "qa.md")
-    except FileNotFoundError:
-        return errors
-
     task_root = task_doc["root"]
-    qa_root = qa_doc["root"]
+
+    # Current format: the QA record lives in task.md under `## QA`.
+    # Legacy format: a separate qa.md whose root fields hold the QA record.
+    if "QA" in task_doc:
+        qa_doc = task_doc
+        qa_root = dict(task_doc["QA"])
+        qa_root.setdefault("task_id", task_root.get("task_id", ""))
+        validate_acceptance_criteria(task_path / "task.md", rel_task_path, config, errors)
+        validate_tests_recorded(task_path / "task.md", rel_task_path, qa_root, errors)
+    else:
+        try:
+            qa_doc = parse_markdown_file(task_path / "qa.md")
+        except FileNotFoundError:
+            errors.append(f"{rel_task_path}: task.md has no `## QA` section and there is no legacy `qa.md`")
+            return errors
+        qa_root = qa_doc["root"]
+
     follow_up = qa_doc.get("Follow-Up Review Decision", {})
     trigger_matrix = qa_doc.get("Trigger Matrix", {})
 
     validate_statuses(task_root, qa_root, rel_task_path, config, errors)
-    validate_required_fields(qa_root, config["required_qa_fields"], rel_task_path, "qa.md root", errors)
-    validate_required_fields(follow_up, config["required_follow_up_fields"], rel_task_path, "qa.md Follow-Up Review Decision", errors)
-    validate_required_fields(trigger_matrix, config["required_trigger_matrix_fields"], rel_task_path, "qa.md Trigger Matrix", errors)
+    validate_required_fields(qa_root, config["required_qa_fields"], rel_task_path, "QA record", errors)
+    validate_required_fields(follow_up, config["required_follow_up_fields"], rel_task_path, "Follow-Up Review Decision", errors)
+    validate_required_fields(trigger_matrix, config["required_trigger_matrix_fields"], rel_task_path, "Trigger Matrix", errors)
     validate_yes_no_fields(follow_up, ["additional_review_needed", "review_task_required"], rel_task_path, errors, config)
     validate_yes_no_fields(
         trigger_matrix,
@@ -124,7 +156,7 @@ def validate_task_folder(task_path: Path, config: dict) -> List[str]:
     task_id = task_root.get("task_id", "")
     qa_task_id = qa_root.get("task_id", "")
     if task_id and qa_task_id and task_id != qa_task_id:
-        errors.append(f"{rel_task_path}: task.md task_id `{task_id}` does not match qa.md task_id `{qa_task_id}`")
+        errors.append(f"{rel_task_path}: task.md task_id `{task_id}` does not match QA task_id `{qa_task_id}`")
 
     if qa_root.get("review_depth") and qa_root["review_depth"] not in config["review_depths"]:
         errors.append(f"{rel_task_path}: invalid qa review_depth `{qa_root['review_depth']}`")
@@ -139,6 +171,33 @@ def validate_task_folder(task_path: Path, config: dict) -> List[str]:
     return errors
 
 
+def validate_acceptance_criteria(task_md: Path, rel_task_path: Path, config: dict, errors: List[str]) -> None:
+    """Every acceptance criterion must say how it is verified."""
+    marker = config.get("criteria_verify_marker", "verify:")
+    criteria = [b for b in section_bullets(task_md, "Acceptance Criteria") if b]
+    if not criteria:
+        errors.append(f"{rel_task_path}: `Acceptance Criteria` has no criteria")
+        return
+    for criterion in criteria:
+        _, found, how = criterion.partition(marker)
+        if not found or not how.strip(" `"):
+            short = criterion if len(criterion) <= 60 else criterion[:57] + "..."
+            errors.append(f"{rel_task_path}: acceptance criterion has no `{marker}` step: {short}")
+
+
+def validate_tests_recorded(task_md: Path, rel_task_path: Path, qa_root: dict, errors: List[str]) -> None:
+    """A finished QA record must state which tests ran (or that none did)."""
+    if qa_root.get("status") != "Done":
+        return
+    for bullet in section_bullets(task_md, "QA"):
+        label, found, value = bullet.partition(":")
+        if found and label.strip().lower() == "tests run":
+            if not value.strip():
+                errors.append(f"{rel_task_path}: `Tests run` is empty in the QA record")
+            return
+    errors.append(f"{rel_task_path}: QA record has no `Tests run` line")
+
+
 def validate_statuses(task_root: dict, qa_root: dict, rel_task_path: Path, config: dict, errors: List[str]) -> None:
     task_status = task_root.get("status", "")
     qa_status = qa_root.get("status", "")
@@ -147,7 +206,7 @@ def validate_statuses(task_root: dict, qa_root: dict, rel_task_path: Path, confi
     if qa_status and qa_status not in config["qa_statuses"]:
         errors.append(f"{rel_task_path}: invalid QA status `{qa_status}`")
     if task_status == "Done" and qa_status != "Done":
-        errors.append(f"{rel_task_path}: task is `Done` but qa.md status is `{qa_status or 'missing'}`")
+        errors.append(f"{rel_task_path}: task is `Done` but QA status is `{qa_status or 'missing'}`")
 
 
 def validate_required_fields(section: dict, fields: List[str], rel_task_path: Path, label: str, errors: List[str]) -> None:
@@ -264,7 +323,7 @@ def main() -> int:
         return 1
 
     for task_path in task_paths:
-        rel_path = task_path.relative_to(ROOT) if task_path.is_absolute() else task_path
+        rel_path = display_path(task_path)
         print(f"OK: {rel_path}")
     return 0
 
