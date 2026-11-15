@@ -1,7 +1,7 @@
 ## Review Governance
 
 These rules govern the QA-led review workflow and are enforced by
-`planning/scripts/validate_task_docs.py` against `.agents/config/review_rules.json`.
+`.agents/planning/scripts/validate_task_docs.py` against `.agents/config/review_rules.json`.
 Read this module when performing QA or moving a task to `In Review`. Agent labels here (`Security`, `Database`) are the
 values written in the QA `review_agents` field.
 
@@ -41,13 +41,13 @@ Proportionality rule:
 
 Verification rule:
 
-- Run `python planning/scripts/check.py` once and read only its failures. Do not re-derive by reading what it already checked (build, lint, types, tests).
+- Run `python .agents/planning/scripts/check.py` once and read only its failures. Do not re-derive by reading what it already checked (build, lint, types, tests).
 - Check each acceptance criterion through its `verify:` step. A criterion without one goes back to `In Progress`.
 - Spend the review on what tools cannot judge: whether the task solved what was asked, edge cases, invalid inputs, and regression risk.
 
 Lessons rule:
 
-- When a finding could repeat, add one line to `planning/docs/lessons/{area}.md` (format in `planning/docs/lessons/README.md`).
+- When a finding could repeat, add one line to `.agents/planning/docs/lessons/{area}.md` (format in `.agents/planning/docs/lessons/README.md`).
 - If the lesson can be enforced by a test or lint rule, add that check instead of the lesson.
 
 ---

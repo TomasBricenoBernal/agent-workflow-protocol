@@ -3,7 +3,7 @@
   "commands": [
     {
       "name": "script-tests",
-      "run": "{python} -m unittest discover -s planning/scripts/tests -q"
+      "run": "{python} -m unittest discover -s .agents/planning/scripts/tests -q"
     }
   ]
 }

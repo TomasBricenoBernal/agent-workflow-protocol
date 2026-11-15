@@ -15,10 +15,10 @@
       "Bash(find:*)",
       "Bash(diff:*)",
       "Bash(tree:*)",
-      "Bash(python3 planning/scripts/validate_task_docs.py:*)",
-      "Bash(python planning/scripts/validate_task_docs.py:*)",
-      "Bash(python3 planning/scripts/check.py:*)",
-      "Bash(python planning/scripts/check.py:*)"
+      "Bash(python3 .agents/planning/scripts/validate_task_docs.py:*)",
+      "Bash(python .agents/planning/scripts/validate_task_docs.py:*)",
+      "Bash(python3 .agents/planning/scripts/check.py:*)",
+      "Bash(python .agents/planning/scripts/check.py:*)"
     ]
   },
   "hooks": {
@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"$CLAUDE_PROJECT_DIR/planning/scripts/check.py\" --hook"
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.agents/planning/scripts/check.py\" --hook"
           }
         ]
       }

@@ -15,7 +15,7 @@ Own APIs, services, validation, file processing flow, business rules, and persis
 
 Skip every item the delegating brief already covers.
 
-1. `planning/tasks/active_task.md`
+1. `.agents/planning/tasks/active_task.md`
 2. `.agents/context/current_state.md`
 3. Related task files
 4. Only the source files needed for the task

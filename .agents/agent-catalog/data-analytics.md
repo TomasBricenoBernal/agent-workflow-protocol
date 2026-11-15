@@ -15,7 +15,7 @@ Own Excel/CSV processing, data validation, deterministic transformations, metric
 
 Skip every item the delegating brief already covers.
 
-1. `planning/tasks/active_task.md`
+1. `.agents/planning/tasks/active_task.md`
 2. `.agents/context/current_state.md`
 3. Related task files
 4. Only the data-processing files needed for the task

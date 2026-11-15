@@ -1,0 +1,66 @@
+# Modified Files
+
+List files changed across the feature.
+
+- `AGENTS.md`: compacted and extended the shared workflow protocol.
+- `CLAUDE.md`: synchronized Claude-wide protocol with the shared workflow rules.
+- `.claude/agents/architect.md`: added role-specific guidance.
+- `.claude/agents/backend.md`: added role-specific guidance.
+- `.claude/agents/context-manager.md`: added role-specific guidance.
+- `.claude/agents/data-analytics.md`: added role-specific guidance.
+- `.claude/agents/database.md`: added role-specific guidance.
+- `.claude/agents/devops.md`: added the missing DevOps role specialization.
+- `.claude/agents/frontend-ui.md`: added role-specific guidance.
+- `.claude/agents/innovation.md`: added role-specific guidance.
+- `.claude/agents/qa.md`: added role-specific guidance.
+- `.claude/agents/security.md`: added role-specific guidance.
+- `.claude/agents/ux-operational.md`: added role-specific guidance.
+- `tasks/_templates/handoff.md`: added structured handoff fields for low-token stage changes.
+- `tasks/_templates/qa.md`: added evidence-oriented QA checklist fields.
+- `.agents/planning/tasks/2026/05/0002-agent-limits-and-devops-role/task.md`: tracked protocol refinement for token limits and DevOps scope.
+- `.agents/planning/tasks/2026/05/0002-agent-limits-and-devops-role/modified_files.md`: tracked files changed by the refinement task.
+- `.agents/planning/tasks/2026/05/0002-agent-limits-and-devops-role/qa.md`: recorded QA for the refinement task.
+- `.agents/planning/tasks/2026/05/0003-token-efficiency-model/task.md`: tracked protocol refinement for stage ownership and token-efficiency rules.
+- `.agents/planning/tasks/2026/05/0003-token-efficiency-model/modified_files.md`: tracked files changed by the efficiency-model task.
+- `.agents/planning/tasks/2026/05/0003-token-efficiency-model/qa.md`: recorded QA for the efficiency-model task.
+- `.agents/planning/tasks/2026/05/0004-qa-driven-review-scheduling/task.md`: tracked protocol refinement for QA-driven review scheduling.
+- `.agents/planning/tasks/2026/05/0004-qa-driven-review-scheduling/modified_files.md`: tracked files changed by the QA-driven scheduling task.
+- `.agents/planning/tasks/2026/05/0004-qa-driven-review-scheduling/qa.md`: recorded QA for the QA-driven scheduling task.
+- `tasks/_templates/task.md`: added review-task relationship fields.
+- `features/_templates/plan.md`: added review-task planning guidance.
+- `features/_templates/qa.md`: added scheduled review task tracking.
+- `.agents/planning/tasks/2026/05/0005-review-trigger-hardening/task.md`: tracked protocol hardening for mandatory review decisions and trigger rules.
+- `.agents/planning/tasks/2026/05/0005-review-trigger-hardening/modified_files.md`: tracked files changed by the review-trigger hardening task.
+- `.agents/planning/tasks/2026/05/0005-review-trigger-hardening/qa.md`: recorded QA for the review-trigger hardening task.
+- `.agents/planning/tasks/2026/05/0006-balanced-qa-gating/task.md`: tracked protocol balancing for required non-trivial QA and proportional closure rules.
+- `.agents/planning/tasks/2026/05/0006-balanced-qa-gating/modified_files.md`: tracked files changed by the balanced QA gating task.
+- `.agents/planning/tasks/2026/05/0006-balanced-qa-gating/qa.md`: recorded QA for the balanced QA gating task.
+- `.agents/planning/tasks/2026/05/0007-task-doc-validation-automation/task.md`: tracked the validator and config-driven review-rule automation task.
+- `.agents/planning/tasks/2026/05/0007-task-doc-validation-automation/modified_files.md`: tracked files changed by the validation automation task.
+- `.agents/planning/tasks/2026/05/0007-task-doc-validation-automation/qa.md`: recorded QA for the validation automation task.
+- `.agents/config/review_rules.json`: added config-driven review trigger and validation policy.
+- `scripts/validate_task_docs.py`: added local task-document validation automation.
+- `README.md`: documented how to run the validator locally.
+- `.agents/planning/tasks/2026/05/0008-add-ml-and-ai-agents/task.md`: tracked the addition of machine-learning and AI-integration agent roles.
+- `.agents/planning/tasks/2026/05/0008-add-ml-and-ai-agents/modified_files.md`: tracked files changed by the new-agent task.
+- `.agents/planning/tasks/2026/05/0008-add-ml-and-ai-agents/qa.md`: recorded QA for the new-agent task.
+- `.claude/agents/machine-learning.md`: added the dedicated machine-learning role specialization.
+- `.claude/agents/ai-integrations.md`: added the dedicated AI-integrations role specialization.
+- `tasks/active_task.md`: initialized active-task tracking.
+- `tasks/_templates/task.md`: created task template.
+- `tasks/_templates/modified_files.md`: created task modified-files template.
+- `tasks/_templates/handoff.md`: created task handoff template.
+- `tasks/_templates/qa.md`: created task QA template.
+- `tasks/_templates/plan.md`: created task plan template.
+- `features/_templates/modified_files.md`: created feature modified-files template.
+- `features/_templates/changes_current.md`: created feature current-changes template.
+- `features/_templates/plan.md`: created feature plan template.
+- `features/_templates/qa.md`: created feature QA template.
+- `docs/index.md`: documented repository-wide docs usage.
+- `docs/decision_log.md`: initialized reusable decision log.
+- `docs/glossary.md`: initialized reusable glossary.
+- `docs/token_strategy.md`: initialized token-usage guidance.
+- `.agents/protocol/11-project-setup.md`: added the mandatory project setup module.
+- `.agents/protocol/01-foundations.md`: added the Project Setup Gate.
+- `.agents/agent-catalog/`: now holds the 10 optional subagents moved from `.claude/agents/`.
+- `.agents/planning/tasks/2026/11/0009-project-setup-gate/`: task record for the setup gate.
